@@ -1,37 +1,10 @@
 import pyperclip
-import requests
 
-
-def build_id_to_name_mapping() -> dict[str, str]:
-    """Build id to name mapping dictionary."""
-    r = requests.get("https://api.warframe.market/v2/items")
-    r.raise_for_status()
-
-    id_to_name = {}
-
-    id_to_name = {item["id"]: item["i18n"]["en"]["name"] for item in r.json()["data"]}
-
-    return id_to_name
-
-
-def gather_user_listings(user: str) -> list[str]:
-    """Gather listings for a specific user."""
-    r = requests.get(f"https://api.warframe.market/v2/orders/user/{user.lower()}")
-    r.raise_for_status()
-
-    listings = [item["itemId"] for item in r.json()["data"]]
-
-    return listings
-
-
-def convert_ids_to_item_names(
-    id_to_name: dict[str, str],
-    listings: list[str],
-) -> list[str]:
-    """Convert listing IDs to in-game item names, alphabetically sorted."""
-    items = [id_to_name[listing] for listing in listings]
-
-    return sorted(items)
+from utils import (
+    build_id_to_name_mapping,
+    convert_ids_to_item_names,
+    gather_user_listings,
+)
 
 
 def format_items(items: list[str]) -> list[str]:
@@ -76,7 +49,7 @@ def copy_items(chunks: list[str]) -> None:
             print(f"Chunk {i}/{len(chunks)} copied ({len(chunk)} chars).")
 
 
-def main() -> None:
+def copy_listings() -> None:
     """Main entry point."""
     id_to_name = build_id_to_name_mapping()
     listings = gather_user_listings("bhwsg")
@@ -87,4 +60,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    copy_listings()
