@@ -9,13 +9,15 @@ from utils import (
 
 
 def convert_listings_to_links(listings):
-    """Process and format item names for ingame pasting."""
-    return [
-        f"[{listing.replace(' Blueprint', '')}]"
-        if "Blueprint" in listing
-        else f"[{listing}]"
-        for listing in listings
-    ]
+    """Process, format, and sort item names for ingame pasting."""
+    return sorted(
+        [
+            f"[{listing.replace(' Blueprint', '')}]"
+            if "Blueprint" in listing
+            else f"[{listing}]"
+            for listing in listings
+        ]
+    )
 
 
 def chunk_links(links):
