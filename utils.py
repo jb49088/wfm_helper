@@ -53,6 +53,7 @@ def get_base_name(item_name):
         "Lower Limb",
         "Handle",
         "Upper Limb",
+        "String",
     ]
     words = item_name.split()
     # Remove known part words from the end
