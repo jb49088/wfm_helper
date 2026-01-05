@@ -5,7 +5,8 @@ from utils import (
 )
 
 
-def format_listings(listings):
+def build_rows(listings):
+    """Build rows for table rendering."""
     data_rows = []
     for item, details in listings.items():
         row = {
@@ -18,8 +19,19 @@ def format_listings(listings):
         }
         data_rows.append(row)
 
-    # Determine column widths
-    column_widths = {key: 0 for key in row}
+    return data_rows
+
+
+def determine_widths(data_rows):
+    """Determine maximum width for each colunm."""
+    column_widths = {
+        "item": 0,
+        "price": 0,
+        "rank": 0,
+        "quantity": 0,
+        "updated": 0,
+        "created": 0,
+    }
 
     for row in data_rows:
         for key in row:
@@ -28,6 +40,11 @@ def format_listings(listings):
     # Account for spacing
     column_widths = {key: width + 2 for key, width in column_widths.items()}
 
+    return column_widths
+
+
+def display_listings(data_rows, column_widths):
+    """Display listings in a sql-like table."""
     separator_row = ["-" * width for width in column_widths.values()]
 
     header_row = [key.title().center((width)) for key, width in column_widths.items()]
@@ -46,12 +63,15 @@ def format_listings(listings):
     print(f"+{'+'.join(separator_row)}+")
 
 
-def display_listings():
+def display_user_listings():
+    """Main entry point."""
     all_items = get_all_items()
     id_to_name = build_id_to_name_mapping(all_items)
     user_listings = extract_user_listings("bhwsg", id_to_name)
-    format_listings(user_listings)
+    data_rows = build_rows(user_listings)
+    column_widths = determine_widths(data_rows)
+    display_listings(data_rows, column_widths)
 
 
 if __name__ == "__main__":
-    display_listings()
+    display_user_listings()
