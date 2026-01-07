@@ -2,6 +2,7 @@ from utils import (
     build_id_to_name_mapping,
     extract_user_listings,
     get_all_items,
+    sort_user_listings,
 )
 
 
@@ -73,7 +74,8 @@ def display_user_listings():
     all_items = get_all_items()
     id_to_name = build_id_to_name_mapping(all_items)
     user_listings = extract_user_listings("bhwsg", id_to_name)
-    data_rows = build_rows(user_listings)
+    sorted_user_listings = sort_user_listings(user_listings)
+    data_rows = build_rows(sorted_user_listings)
     column_widths = determine_widths(data_rows)
     display_listings(data_rows, column_widths)
 
