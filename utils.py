@@ -35,7 +35,6 @@ def extract_user_listings(user, id_to_name):
                     "price": listing.get("platinum", 0),
                     "rank": listing.get("rank"),
                     "quantity": listing.get("quantity", 1),
-                    "created": listing.get("createdAt", ""),
                     "updated": listing.get("updatedAt", ""),
                 }
             )

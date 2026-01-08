@@ -22,7 +22,6 @@ def build_rows(listings, max_ranks, copy=True):
             else "",
             "quantity": str(listing["quantity"]),
             "updated": str(listing["updated"]),
-            "created": str(listing["created"]),
         }
         if not copy:
             del row["#"]
