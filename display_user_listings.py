@@ -84,8 +84,14 @@ def copy_listing(user, data_rows):
 
     for row in data_rows:
         if row["#"] == listing:
-            rank_segment = f" (rank {row['rank']})" if row.get("rank") else ""
-            message = f'/w {user} Hi! I want to buy: "{row["item"]}{rank_segment}" for {row["price"]} platinum. (wfm_cli)'
+            segments = [
+                "WTB",
+                f"{row['item']}",
+                f"Rank: {row['rank']}" if row.get("rank") else "",
+                f"Price: {row['price']}p",
+            ]
+            segments = [s for s in segments if s]
+            message = f"/w {user} {' | '.join(segments)}"
             pyperclip.copy(message)
             print(f"Copied to clipboard: {message}")
             return
