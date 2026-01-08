@@ -6,7 +6,7 @@ from utils import (
 )
 
 
-def build_rows(listings):
+def build_rows(listings, no_copy=False):
     """Build rows for table rendering."""
     data_rows = []
     for i, listing in enumerate(listings, start=1):
@@ -19,6 +19,8 @@ def build_rows(listings):
             "updated": str(listing["updated"]),
             "created": str(listing["created"]),
         }
+        if no_copy:
+            del row["#"]
         data_rows.append(row)
 
     return data_rows
@@ -26,15 +28,7 @@ def build_rows(listings):
 
 def determine_widths(data_rows, sort_by):
     """Determine maximum width for each colunm."""
-    column_widths = {
-        "#": 0,
-        "item": 0,
-        "price": 0,
-        "rank": 0,
-        "quantity": 0,
-        "updated": 0,
-        "created": 0,
-    }
+    column_widths = {key: 0 for key in data_rows[0]}
 
     for row in data_rows:
         for key in row:
@@ -82,10 +76,9 @@ def display_listings(data_rows, column_widths, sort_by, order):
 
 def display_user_listings():
     """Main entry point."""
-    username = "bhwsg"
     all_items = get_all_items()
     id_to_name = build_id_to_name_mapping(all_items)
-    user_listings = extract_user_listings(username, id_to_name)
+    user_listings = extract_user_listings("bhwsg", id_to_name)
     sorted_user_listings, sort_by, order = sort_user_listings(user_listings)
     data_rows = build_rows(sorted_user_listings)
     column_widths = determine_widths(data_rows, sort_by)
