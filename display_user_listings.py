@@ -67,12 +67,14 @@ def display_listings(data_rows, column_widths, sort_by, order):
     print(f"+{'+'.join(separator_row)}+")
 
     for row in data_rows:
-        data_row = [
-            f" {value}p".ljust(column_widths[key])
-            if key == "price"
-            else f" {value}".ljust(column_widths[key])
-            for key, value in row.items()
-        ]
+        data_row = []
+        for key, value in row.items():
+            if key == "price":
+                value = f"{value}p"
+            if key in {"price", "rank", "quantity"}:
+                data_row.append(f"{value} ".rjust(column_widths[key]))
+            else:
+                data_row.append(f" {value}".ljust(column_widths[key]))
 
         print(f"|{'|'.join(data_row)}|")
 
