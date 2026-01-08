@@ -33,13 +33,36 @@ def extract_item_listings(id_to_name):
     return item_listings
 
 
+def build_rows(listings, max_ranks, copy=True):
+    """Build rows for table rendering."""
+    data_rows = []
+    for i, listing in enumerate(listings, start=1):
+        row = {
+            "#": str(i),
+            "seller": listing["seller"],
+            "reputation": str(listing["reputation"]),
+            "status": listing["status"],
+            "item": listing["item"],
+            "price": str(listing["price"]),
+            "rank": f"{listing['rank']}/{max_ranks[listing['item']]}"
+            if listing["rank"] is not None
+            else "",
+            "quantity": str(listing["quantity"]),
+            "updated": str(listing["updated"]),
+        }
+        if not copy:
+            del row["#"]
+        data_rows.append(row)
+
+    return data_rows
+
+
 def display_item_listings():
     all_items = get_all_items()
     id_to_name = build_id_to_name_mapping(all_items)
     max_ranks = build_name_to_max_rank_mapping(all_items, id_to_name)
     item_listings = extract_item_listings(id_to_name)
-
-    print(item_listings)
+    data_rows = build_rows(item_listings, max_ranks)
 
 
 if __name__ == "__main__":
