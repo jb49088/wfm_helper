@@ -44,7 +44,6 @@ def build_rows(listings, max_ranks, copy=True):
         row = {
             "#": str(i),
             "seller": listing["seller"],
-            "reputation": str(listing["reputation"]),
             "status": listing["status"],
             "item": listing["item"],
             "price": f"{listing['price']}p",
@@ -52,6 +51,7 @@ def build_rows(listings, max_ranks, copy=True):
             if listing["rank"] is not None
             else "",
             "quantity": str(listing["quantity"]),
+            "reputation": str(listing["reputation"]),
             "updated": str(listing["updated"]),
         }
         if not copy:
