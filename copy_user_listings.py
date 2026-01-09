@@ -112,7 +112,7 @@ def copy_user_listings(args):
     all_items = get_all_items()
     id_to_name = build_id_to_name_mapping(all_items)
     user_listings = extract_user_listings(args.user, id_to_name)
-    sorted_user_listings, _, _ = sort_listings(
+    sorted_user_listings = sort_listings(
         user_listings, args.sort, args.order, DEFAULT_ORDERS
     )
     expanded_listings = expand_item_sets(sorted_user_listings, all_items)
