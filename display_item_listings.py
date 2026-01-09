@@ -38,6 +38,37 @@ def extract_item_listings(id_to_name):
     return item_listings
 
 
+def sort_item_listings(listings, sort_by="price", order=None):
+    """Sort listings with sane defaults."""
+    default_orders = {
+        "seller": "asc",
+        "reputation": "desc",
+        "status": "asc",
+        "item": "asc",
+        "price": "asc",
+        "rank": "desc",
+        "quantity": "desc",
+        "created": "desc",
+        "updated": "desc",
+    }
+
+    is_desc = (default_orders[sort_by] == "desc") if not order else (order == "desc")
+
+    sorted_listings = list(
+        sorted(
+            listings,
+            key=lambda listing: listing[sort_by]
+            if listing[sort_by] is not None
+            else float("-inf")
+            if is_desc
+            else float("inf"),
+            reverse=is_desc,
+        )
+    )
+
+    return (sorted_listings, sort_by, default_orders[sort_by] if not order else order)
+
+
 def build_rows(listings, max_ranks, copy=True):
     """Build rows for table rendering."""
     data_rows = []
@@ -67,9 +98,10 @@ def display_item_listings():
     id_to_name = build_id_to_name_mapping(all_items)
     max_ranks = build_name_to_max_rank_mapping(all_items, id_to_name)
     item_listings = extract_item_listings(id_to_name)
-    data_rows = build_rows(item_listings, max_ranks)
-    column_widths = determine_widths(data_rows, "item")
-    display_listings(data_rows, column_widths, RIGHT_ALLIGNED_COLUMNS, "item", "asc")
+    sorted_item_listings, sort_by, order = sort_item_listings(item_listings)
+    data_rows = build_rows(sorted_item_listings, max_ranks)
+    column_widths = determine_widths(data_rows, sort_by)
+    display_listings(data_rows, column_widths, RIGHT_ALLIGNED_COLUMNS, sort_by, order)
 
 
 if __name__ == "__main__":
