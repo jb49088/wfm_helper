@@ -44,34 +44,6 @@ def extract_user_listings(user, id_to_name):
     return user_listings
 
 
-def sort_user_listings(listings, sort_by="updated", order=None):
-    """Sort listings with sane defaults."""
-    default_orders = {
-        "item": "asc",
-        "price": "desc",
-        "rank": "desc",
-        "quantity": "desc",
-        "created": "desc",
-        "updated": "desc",
-    }
-
-    is_desc = (default_orders[sort_by] == "desc") if not order else (order == "desc")
-
-    sorted_listings = list(
-        sorted(
-            listings,
-            key=lambda listing: listing[sort_by]
-            if listing[sort_by] is not None
-            else float("-inf")
-            if is_desc
-            else float("inf"),
-            reverse=is_desc,
-        )
-    )
-
-    return (sorted_listings, sort_by, default_orders[sort_by] if not order else order)
-
-
 def determine_widths(data_rows, sort_by):
     """Determine maximum width for each colunm."""
     column_widths = {key: 0 for key in data_rows[0]}
