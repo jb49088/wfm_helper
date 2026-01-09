@@ -44,6 +44,9 @@ def extract_user_listings(user, id_to_name):
     return user_listings
 
 
+# TODO: Add secondary sort by updated to break price ties
+
+
 def sort_listings(listings, sort_by, order, default_orders):
     """Sort listings."""
     if order is None:
