@@ -11,7 +11,9 @@ from display_user_listings import display_user_listings
 
 def wfm_cli():
     """Main entry point for wfm_cli."""
-    pass
+    copy_user_listings()
+    display_item_listings()
+    display_user_listings()
 
 
 if __name__ == "__main__":
