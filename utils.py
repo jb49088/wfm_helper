@@ -1,5 +1,7 @@
 import requests
 
+ARROW_MAPPING = {"desc": "↓", "asc": "↑"}
+
 
 def get_all_items():
     """Extract all raw item data."""
@@ -92,10 +94,8 @@ def display_listings(data_rows, column_widths, right_alligned_columns, sort_by, 
     """Display listings in a sql-like table."""
     separator_row = ["-" * width for width in column_widths.values()]
 
-    arrows = {"desc": "↓", "asc": "↑"}
-
     header_row = [
-        f"{key} {arrows[order]}".title().center(width)
+        f"{key} {ARROW_MAPPING[order]}".title().center(width)
         if key == sort_by
         else key.title().center(width)
         for key, width in column_widths.items()
