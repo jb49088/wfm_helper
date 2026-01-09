@@ -1,4 +1,3 @@
-import pyperclip
 import requests
 
 ARROW_MAPPING = {"desc": "↓", "asc": "↑"}
@@ -67,23 +66,3 @@ def display_listings(data_rows, column_widths, right_alligned_columns, sort_by, 
         print(f"|{'|'.join(data_row)}|")
 
     print(f"+{'+'.join(separator_row)}+")
-
-
-def copy_listing(user, data_rows):
-    listing = input("Listing to copy: ").strip()
-
-    for row in data_rows:
-        if row["#"] == listing:
-            segments = [
-                "WTB",
-                f"{row['item']}",
-                f"Rank: {row['rank']}" if row.get("rank") else "",
-                f"Price: {row['price']}",
-            ]
-            segments = [s for s in segments if s]
-            message = f"/w {user} {' | '.join(segments)}"
-            pyperclip.copy(message)
-            print(f"Copied to clipboard: {message}")
-            return
-
-    print(f"Listing {listing} not found")
