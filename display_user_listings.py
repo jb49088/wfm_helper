@@ -108,7 +108,7 @@ def display_user_listings():
     """Main entry point."""
     args = {
         "user": "bhwsg",
-        "copy": True,
+        "copy": False,
     }
     all_items = get_all_items()
     id_to_name = build_id_to_name_mapping(all_items)
