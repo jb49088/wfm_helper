@@ -2,6 +2,10 @@
 # =                                   WFM_CLI                                    =
 # ================================================================================
 
+# TODO: Reverse engineer username normalization for api url
+# TODO: Add secondary sort by updated to break price ties
+# TODO: Add error handling when a user has 0 listings
+
 import argparse
 
 from copy_user_listings import copy_user_listings
